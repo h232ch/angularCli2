@@ -21,6 +21,11 @@ export class EmployeeComponent {
   DateOfJoining = "";
   PhotoFileName = "anonymous.png";
   PhotoPath = environment.PHOTO_URL;
+
+  EmployeeIdFilter = "";
+  EmployeeNameFilter = "";
+  employeesWithoutFilter: any = [];
+
   ngOnInit(): void {
     this.refreshList()
     console.log("OnInit strt")
@@ -30,6 +35,7 @@ export class EmployeeComponent {
     this.http.get<any>(environment.API_URL + 'employee')
       .subscribe(data => {
         this.employees = data;
+        this.employeesWithoutFilter = data;
       });
 
     this.http.get<any>(environment.API_URL + 'department')
@@ -104,8 +110,30 @@ export class EmployeeComponent {
       .subscribe((data: any) => {
         this.PhotoFileName = data.toString();
       })
+  }
 
+  FilterFn() {
+    let EmployeeIdFilter = this.EmployeeIdFilter;
+    let EmployeeNameFilter = this.EmployeeNameFilter;
 
+    this.employees = this.employeesWithoutFilter.filter(
+      function (el: any) {
+        return el.EmployeeId.toString().toLowerCase().includes(
+          EmployeeIdFilter.toString().trim().toLowerCase()
+        ) && el.EmployeeName.toString().toLowerCase().includes(
+          EmployeeNameFilter.toString().trim().toLowerCase()
+        );
+      }
+    );
+  }
 
+  sortResult(prop: string, asc: boolean) {
+    this.employees = this.employeesWithoutFilter.sort(function (a: any, b: any) {
+      if (asc) {
+        return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
+      } else {
+        return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
+      }
+    });
   }
 }
