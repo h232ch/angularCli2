@@ -13,8 +13,8 @@
       <div class="d-flex flex-row">
         Department Number
         <input class="form-control m-2"
-               [(ngModel)]="DepartmentIdFilter"
-               (keyup)="FilterFn()"
+               [(ngModel)]="departmentIdFilter"
+               (keyup)="filterFn()"
                placeholder="Filter">
         <button type="button" class="btn btn-light"
                 (click)="sortResult('DepartmentId',true)">
@@ -39,8 +39,8 @@
       <div class="d-flex flex-row">
         Department Name
         <input class="form-control m-2"
-               [(ngModel)]="DepartmentNameFilter"
-               (keyup)="FilterFn()"
+               [(ngModel)]="departmentNameFilter"
+               (keyup)="filterFn()"
                placeholder="Filter">
 
         <button type="button" class="btn btn-light"
@@ -115,16 +115,16 @@
       <div class="modal-body">
         <div class="input-group mb-3">
           <span class="input-group-text">Department Name</span>
-          <input type="text" class="form-control" [(ngModel)]="DepartmentName">
+          <input type="text" class="form-control" [(ngModel)]="departmentName">
         </div>
 
         <button type="button" (click)="createClick()"
-                *ngIf="DepartmentId == 0" class="btn btn-primary">
+                *ngIf="departmentId == 0" class="btn btn-primary">
           Create
         </button>
 
         <button type="button" (click)="updateClick()"
-                *ngIf="DepartmentId != 0" class="btn btn-primary">
+                *ngIf="departmentId != 0" class="btn btn-primary">
           Update
         </button>
       </div>

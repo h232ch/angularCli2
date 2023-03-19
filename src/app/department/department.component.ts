@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { environment } from "../../environments/environment";
 import { HttpClient } from "@angular/common/http";
+import {CommonService} from "../common.service";
 
 @Component({
   selector: 'app-department',
@@ -8,18 +9,20 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ['./department.component.css']
 })
 export class DepartmentComponent implements OnInit {
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private commonService: CommonService) {
   }
 
 
   departments: any = [];
 
   modalTitle = "";
-  DepartmentId = 0;
-  DepartmentName = "";
+  departmentId = 0;
+  departmentName = "";
 
-  DepartmentIdFilter = "";
-  DepartmentNameFilter = "";
+  departmentIdFilter = "";
+  departmentNameFilter = "";
   departmentsWithoutFilter: any = [];
 
 
@@ -37,19 +40,19 @@ export class DepartmentComponent implements OnInit {
 
   addClick() {
     this.modalTitle = "Add Department";
-    this.DepartmentId = 0;
-    this.DepartmentName = "";
+    this.departmentId = 0;
+    this.departmentName = "";
   }
 
   editClick(dep: any) {
     this.modalTitle = "Edit Department";
-    this.DepartmentId = dep.DepartmentId;
-    this.DepartmentName = dep.DepartmentName;
+    this.departmentId = dep.DepartmentId;
+    this.departmentName = dep.DepartmentName;
   }
 
   createClick(){
     let val = {
-      DepartmentName:this.DepartmentName
+      DepartmentName:this.departmentName
     };
     this.http.post(environment.API_URL + 'department', val)
       .subscribe(res => {
@@ -60,8 +63,8 @@ export class DepartmentComponent implements OnInit {
 
   updateClick(){
     let val = {
-      DepartmentId:this.DepartmentId,
-      DepartmentName:this.DepartmentName
+      DepartmentId:this.departmentId,
+      DepartmentName:this.departmentName
     };
     this.http.put(environment.API_URL + 'department', val)
       .subscribe(res => {
@@ -80,30 +83,13 @@ export class DepartmentComponent implements OnInit {
     }
   }
 
-  FilterFn(){
-    let DepartmentIdFilter=this.DepartmentIdFilter;
-    let DepartmentNameFilter=this.DepartmentNameFilter;
-
-
-    this.departments = this.departmentsWithoutFilter.filter(
-      function (el: any) {
-        return el.DepartmentId.toString().toLowerCase().includes(
-            DepartmentIdFilter.toString().trim().toLowerCase()
-          ) &&
-          el.DepartmentName.toString().toLowerCase().includes(
-            DepartmentNameFilter.toString().trim().toLowerCase())
-      }
-    );
+  filterFn() {
+    this.departments = this.commonService.filterFn(this.departmentIdFilter, this.departmentNameFilter,
+      this.departments, this.departmentsWithoutFilter, "department")
   }
 
   sortResult(prop: string, asc: boolean) {
-    this.departments = this.departmentsWithoutFilter.sort(function (a: any, b: any) {
-      if (asc) {
-        return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
-      } else {
-        return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
-      }
-    });
+    this.commonService.sortResult(this.departments, this.departmentsWithoutFilter, prop, asc)
   }
 
 

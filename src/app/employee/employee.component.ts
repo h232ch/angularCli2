@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { environment } from "../../environments/environment";
 import { HttpClient } from "@angular/common/http";
+import {CommonService} from "../common.service";
+import {filter} from "rxjs";
 
 @Component({
   selector: 'app-employee',
@@ -8,22 +10,24 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ['./employee.component.css']
 })
 export class EmployeeComponent {
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private commonService: CommonService) {
 
   }
 
   departments: any=[];
   employees: any=[];
   modalTitle = "";
-  EmployeeId = 0
-  EmployeeName = "";
-  Department = "";
-  DateOfJoining = "";
-  PhotoFileName = "anonymous.png";
-  PhotoPath = environment.PHOTO_URL;
+  employeeId = 0
+  employeeName = "";
+  department = "";
+  dateOfJoining = "";
+  photoFileName = "anonymous.png";
+  photoPath = environment.PHOTO_URL;
 
-  EmployeeIdFilter = "";
-  EmployeeNameFilter = "";
+  employeeIdFilter = "";
+  employeeNameFilter = "";
   employeesWithoutFilter: any = [];
 
   ngOnInit(): void {
@@ -46,28 +50,28 @@ export class EmployeeComponent {
 
   addClick() {
     this.modalTitle = "Add Employee";
-    this.EmployeeId = 0;
-    this.EmployeeName = "";
-    this.Department="";
-    this.DateOfJoining="";
-    this.PhotoFileName="anonymous.png";
+    this.employeeId = 0;
+    this.employeeName = "";
+    this.department="";
+    this.dateOfJoining="";
+    this.photoFileName="anonymous.png";
   }
 
   editClick(emp: any) {
     this.modalTitle = "Add Employee";
-    this.EmployeeId = emp.EmployeeId;
-    this.EmployeeName = emp.EmployeeName;
-    this.Department = emp.Department;
-    this.DateOfJoining = emp.DateOfJoining;
-    this.PhotoFileName = emp.PhotoFileName;
+    this.employeeId = emp.EmployeeId;
+    this.employeeName = emp.EmployeeName;
+    this.department = emp.Department;
+    this.dateOfJoining = emp.DateOfJoining;
+    this.photoFileName = emp.PhotoFileName;
   }
 
   createClick(){
     const val = {
-      EmployeeName: this.EmployeeName,
-      Department: this.Department,
-      DateOfJoining: this.DateOfJoining,
-      PhotoFileName: this.PhotoFileName,
+      EmployeeName: this.employeeName,
+      Department: this.department,
+      DateOfJoining: this.dateOfJoining,
+      PhotoFileName: this.photoFileName,
     };
     this.http.post(environment.API_URL + 'employee', val)
       .subscribe(res => {
@@ -78,11 +82,11 @@ export class EmployeeComponent {
 
   updateClick(){
     const val = {
-      EmployeeId: this.EmployeeId,
-      EmployeeName: this.EmployeeName,
-      Department: this.Department,
-      DateOfJoining: this.DateOfJoining,
-      PhotoFileName: this.PhotoFileName,
+      EmployeeId: this.employeeId,
+      EmployeeName: this.employeeName,
+      Department: this.department,
+      DateOfJoining: this.dateOfJoining,
+      PhotoFileName: this.photoFileName,
     };
     this.http.put(environment.API_URL + 'employee', val)
       .subscribe(res => {
@@ -108,32 +112,16 @@ export class EmployeeComponent {
 
     this.http.post(environment.API_URL + 'employee/savefile', formData)
       .subscribe((data: any) => {
-        this.PhotoFileName = data.toString();
+        this.photoFileName = data.toString();
       })
   }
 
-  FilterFn() {
-    let EmployeeIdFilter = this.EmployeeIdFilter;
-    let EmployeeNameFilter = this.EmployeeNameFilter;
-
-    this.employees = this.employeesWithoutFilter.filter(
-      function (el: any) {
-        return el.EmployeeId.toString().toLowerCase().includes(
-          EmployeeIdFilter.toString().trim().toLowerCase()
-        ) && el.EmployeeName.toString().toLowerCase().includes(
-          EmployeeNameFilter.toString().trim().toLowerCase()
-        );
-      }
-    );
+  filterFn() {
+    this.employees = this.commonService.filterFn(this.employeeIdFilter, this.employeeNameFilter,
+      this.employees, this.employeesWithoutFilter, "employee")
   }
 
   sortResult(prop: string, asc: boolean) {
-    this.employees = this.employeesWithoutFilter.sort(function (a: any, b: any) {
-      if (asc) {
-        return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
-      } else {
-        return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
-      }
-    });
+    this.commonService.sortResult(this.employees, this.employeesWithoutFilter, prop, asc)
   }
 }
