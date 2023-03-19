@@ -12,7 +12,7 @@ Test project of Angular
 
 This angular application is related to Django backend server. <br/>
 `https://github.com/h232ch/djangoAPI`<br/><br/>
-You can make employees and department on this application<br/>
+You can make employees and departments on this application<br/>
 And manage these with `create`, `delete`, `update`<br/><br/>
 It uses `HttpClient` to request django restapi server (backend)<br/><br/>
 You can check the flow between angular and django on this application.<br/>
