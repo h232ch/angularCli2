@@ -17,7 +17,7 @@
                (keyup)="filterFn()"
                placeholder="Filter">
         <button type="button" class="btn btn-light"
-                (click)="sortResult('DepartmentId',true)">
+                (click)="sortResult('department_id',true)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
             <path
@@ -26,7 +26,7 @@
         </button>
 
         <button type="button" class="btn btn-light"
-                (click)="sortResult('DepartmentId',false)">
+                (click)="sortResult('department_id',false)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                class="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
             <path
@@ -44,7 +44,7 @@
                placeholder="Filter">
 
         <button type="button" class="btn btn-light"
-                (click)="sortResult('DepartmentName',true)">
+                (click)="sortResult('department_name',true)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
             <path
@@ -55,7 +55,7 @@
         </button>
 
         <button type="button" class="btn btn-light"
-                (click)="sortResult('DepartmentName',false)">
+                (click)="sortResult('department_name',false)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                class="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
             <path
@@ -69,20 +69,20 @@
   </tr>
   <tr>
     <th>
-      DepartmentID
+      department_id
     </th>
     <th>
-      DepartmentName
+      department_name
     </th>
     <th>
-      Options
+      options
     </th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let dep of departments">
-    <td>{{ dep.DepartmentId }}</td>
-    <td>{{ dep.DepartmentName }}</td>
+    <td>{{ dep.department_id }}</td>
+    <td>{{ dep.department_name }}</td>
     <td>
       <button type="button" class="btn btn-l" data-bs-toggle="modal" data-bs-target="#exampleModal"
               (click)="editClick(dep)">
@@ -93,7 +93,7 @@
         </svg>
       </button>
 
-      <button type="button" class="btn btn-l" (click)="deleteClick(dep.DepartmentId)">
+      <button type="button" class="btn btn-l" (click)="deleteClick(dep.department_id)">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill"
              viewBox="0 0 16 16">
           <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.0383.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>

@@ -23,16 +23,16 @@ export class CommonService {
     return data = filter.filter(
       (el: any) => {
         if (type == "department") {
-          return el.DepartmentId.toString().toLowerCase().includes(
+          return el.department_id.toString().toLowerCase().includes(
               idFilter.toString().trim().toLowerCase()
             ) &&
-            el.DepartmentName.toString().toLowerCase().includes(
+            el.department_name.toString().toLowerCase().includes(
               nameFilter.toString().trim().toLowerCase());
         } else if (type = "employee") {
-          return el.EmployeeId.toString().toLowerCase().includes(
+          return el.employee_id.toString().toLowerCase().includes(
               idFilter.toString().trim().toLowerCase()
             ) &&
-            el.EmployeeName.toString().toLowerCase().includes(
+            el.employee_name.toString().toLowerCase().includes(
               nameFilter.toString().trim().toLowerCase());
         } else {
           return console.log("Error: There is no type.")

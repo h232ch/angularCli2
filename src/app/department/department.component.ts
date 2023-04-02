@@ -28,6 +28,7 @@ export class DepartmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshList()
+
   }
 
   refreshList() {
@@ -35,6 +36,7 @@ export class DepartmentComponent implements OnInit {
       .subscribe(data => {
         this.departments = data;
         this.departmentsWithoutFilter = data;
+        // console.log(data)
       });
   }
 
@@ -46,14 +48,16 @@ export class DepartmentComponent implements OnInit {
 
   editClick(dep: any) {
     this.modalTitle = "Edit Department";
-    this.departmentId = dep.DepartmentId;
-    this.departmentName = dep.DepartmentName;
+    this.departmentId = dep.department_id;
+    this.departmentName = dep.department_name;
   }
 
   createClick(){
     let val = {
-      DepartmentName:this.departmentName
+      department_name:this.departmentName
     };
+
+    // console.log(val)
     this.http.post(environment.API_URL + 'department', val)
       .subscribe(res => {
         alert(res.toString());
@@ -63,8 +67,8 @@ export class DepartmentComponent implements OnInit {
 
   updateClick(){
     let val = {
-      DepartmentId:this.departmentId,
-      DepartmentName:this.departmentName
+      department_id:this.departmentId,
+      department_name:this.departmentName
     };
     this.http.put(environment.API_URL + 'department', val)
       .subscribe(res => {

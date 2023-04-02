@@ -59,19 +59,19 @@ export class EmployeeComponent {
 
   editClick(emp: any) {
     this.modalTitle = "Add Employee";
-    this.employeeId = emp.EmployeeId;
-    this.employeeName = emp.EmployeeName;
-    this.department = emp.Department;
-    this.dateOfJoining = emp.DateOfJoining;
-    this.photoFileName = emp.PhotoFileName;
+    this.employeeId = emp.employee_id;
+    this.employeeName = emp.employee_name;
+    this.department = emp.department;
+    this.dateOfJoining = emp.date_of_joining;
+    this.photoFileName = emp.photo_file_name;
   }
 
   createClick(){
     const val = {
-      EmployeeName: this.employeeName,
-      Department: this.department,
-      DateOfJoining: this.dateOfJoining,
-      PhotoFileName: this.photoFileName,
+      employee_name: this.employeeName,
+      department: this.department,
+      date_of_joining: this.dateOfJoining,
+      photo_file_name: this.photoFileName,
     };
     this.http.post(environment.API_URL + 'employee', val)
       .subscribe(res => {
@@ -82,11 +82,11 @@ export class EmployeeComponent {
 
   updateClick(){
     const val = {
-      EmployeeId: this.employeeId,
-      EmployeeName: this.employeeName,
-      Department: this.department,
-      DateOfJoining: this.dateOfJoining,
-      PhotoFileName: this.photoFileName,
+      employee_id: this.employeeId,
+      employee_name: this.employeeName,
+      department: this.department,
+      date_of_joining: this.dateOfJoining,
+      photo_file_name: this.photoFileName,
     };
     this.http.put(environment.API_URL + 'employee', val)
       .subscribe(res => {
