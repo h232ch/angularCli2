@@ -21,7 +21,7 @@ export class EmployeeComponent {
   modalTitle = "";
   employeeId = 0
   employeeName = "";
-  department = "";
+  department: any;
   dateOfJoining = "";
   photoFileName = "anonymous.png";
   photoPath = environment.PHOTO_URL;
@@ -32,7 +32,7 @@ export class EmployeeComponent {
 
   ngOnInit(): void {
     this.refreshList()
-    console.log("OnInit strt")
+
   }
 
   refreshList() {
@@ -72,7 +72,9 @@ export class EmployeeComponent {
       department: this.department,
       date_of_joining: this.dateOfJoining,
       photo_file_name: this.photoFileName,
+      ep_department_name: "test",
     };
+    console.log(val)
     this.http.post(environment.API_URL + 'employee', val)
       .subscribe(res => {
         alert(res.toString());
